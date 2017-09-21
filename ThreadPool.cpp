@@ -3,7 +3,7 @@
 //
 
 #include "ThreadPool.h"
-#include <iostream>
+
 
 ThreadPool::ThreadPool(int threadCount) :
         m_stop(false) {
