@@ -6,13 +6,12 @@
 int main() {
     std::cout << "Hello, World!" << std::endl;
     ThreadPool threadPool;
-    //   std::this_thread::sleep_for(std::chrono::seconds(3));
     auto test = threadPool.enqueue([](int a, int b) {
         std::cout << "id = " << std::this_thread::get_id() << " start test\n";
         std::this_thread::sleep_for(std::chrono::seconds(13));
         return a + b;
     }, 8, 9);
-//    std::this_thread::sleep_for(std::chrono::seconds(1));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
     auto test1 = threadPool.enqueue([](int a, int b) {
         std::cout << "id = " << std::this_thread::get_id() << " start test1 \n";
         std::this_thread::sleep_for(std::chrono::seconds(3));
