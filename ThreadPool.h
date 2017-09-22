@@ -14,7 +14,7 @@
 class ThreadPool {
 public:
 
-    ThreadPool(int threadCount = std::thread::hardware_concurrency());
+    explicit ThreadPool(int threadCount = std::thread::hardware_concurrency());
 
     virtual ~ThreadPool();
 
@@ -23,9 +23,8 @@ public:
     -> std::future<typename std::result_of<F(Args...)>::type>;
 
 private:
-    // need to keep track of threads so we can join them
+
     std::vector<std::thread> m_workers;
-    // the task queue
     std::queue<std::function<void()> > m_tasks;
 
     // synchronization
@@ -49,6 +48,10 @@ auto ThreadPool::enqueue(F &&f, Args &&... args)
     std::future<return_type> res = task->get_future();
     {
         std::unique_lock<std::mutex> lock(m_queue_mutex);
+        if (m_stop) {
+            throw std::runtime_error("enqueue on stopped ThreadPool");
+        }
+
         m_tasks.emplace([task]() { (*task)(); });
     }
 
