@@ -3,7 +3,7 @@ project(threadpool)
 
 set(CMAKE_CXX_STANDARD 11)
 
-ADD_SUBDIRECTORY(threadlib)
+add_subdirectory(threadlib)
 
 include_directories(threadlib)
 
