@@ -3,5 +3,12 @@ project(threadpool)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp ThreadPool.cpp ThreadPool.h)
+ADD_SUBDIRECTORY(threadlib)
+
+include_directories(threadlib)
+
+aux_source_directory(. SOURCE_FILES)
+
 add_executable(main ${SOURCE_FILES})
+
+target_link_libraries(main threadlib)
