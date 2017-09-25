@@ -9,19 +9,15 @@
 #include <vector>
 #include <queue>
 #include <future>
-#include "Singleton.h"
+
 
 class ThreadPool {
-
-DECLARE_SINGLETON(ThreadPool)
-
-private:
+public:
 
     explicit ThreadPool(int threadCount = std::thread::hardware_concurrency());
 
     virtual ~ThreadPool();
 
-public:
     template<typename F, typename... Args>
     auto enqueue(F &&f, Args &&... args)
     -> std::future<typename std::result_of<F(Args...)>::type>;
